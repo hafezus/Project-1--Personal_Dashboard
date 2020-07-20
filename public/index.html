@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1L48t1sn-i-CeNbz36L6_4aViNfuIc5s&libraries=places"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.min.js"></script>
     <script defer src="script.js"></script>
 </head>
 <body>
     <div class="container"> <!--Flex container row-->
             <div class="time">
-                <h2>Hello, Hafez</h2>
+                <!--<h2>Hello, User</h2>-->
                 <span class="time">
                     <h1 style="text-align: center; padding-top:5vh; font-weight:normal;">N/A</h2>
                 </span>
@@ -22,7 +24,24 @@
             <div class="weather">
                 <div class="weather-api">
                     <div class="city-search-container">
+                        <div class="icon-container">
+                            <canvas id="icon" width="20" height="20"></canvas> <!--Use a library to import our icons. The library will need canvas icons.-->
+                        </div>
                         <input type="text" placeholder="Enter Location" data-city-search class="city-search">
+                        <div class="status" data-status>Enter a Location</div>
+                        <div class="location" data-location>To Find The Weather</div>
+                        <div class="detail">
+                            <div class="title">Wind</div>
+                            <div class="value" data-wind>TBD</div>
+                        </div>
+                        <div class="detail">
+                            <div class="title">Temperature</div>
+                            <div class="value" data-temperature>TBD</div>
+                        </div>
+                        <div class="detail">
+                            <div class="title">Precipitation</div>
+                            <div class="value" data-precipitation>TBD</div>
+                        </div>
                     </div>
                 </div>
             </div>

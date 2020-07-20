@@ -9,7 +9,7 @@
     display:flex;
     flex-flow: column wrap;
     justify-content: space-between;
-    background-color: rgb(223, 85, 85);
+    background-color: rgb(119, 119, 119);
 }
 
 
@@ -19,35 +19,35 @@
     align-self: flex-end;
     min-height:20vh;
     width:30%;
-    background-color: rgb(189, 121, 82);
+    background-color: rgb(165, 113, 83);
 }
 .calendar{
     margin:5px;
     align-self: flex-end;
     min-height:77.5vh;
     width:30%;
-    background-color: rgb(133, 76, 50);
+    background-color: rgb(201, 171, 158);
 }
 .weather{
     margin:5px;
     align-self: center;
     min-height:50vh;
     width:30%;
-    background-color: rgb(125, 182, 103);
+    background-color: rgb(163, 123, 105);
 }
 .to-do-list{
     margin:5px;
     align-self: center;
     min-height:47.5vh;
     width:30%;
-    background-color: rgb(76, 92, 163);
+    background-color: rgb(201, 147, 122);
 }
 .news{
     margin:5px;
     align-self: flex-start;
     min-height:99vh;
     width:30%;
-    background-color: rgb(155, 94, 155)
+    background-color: rgb(100, 92, 87);
 }
 
 /*Styling content inside the flex items*/
