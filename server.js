@@ -15,14 +15,17 @@ app.use(express.json());
 app.use(express.static('public')); 
 
 app.post('/weather', (req, res)=>{
-    let url = `http://api.weatherstack.com/current?access_key=${WEATHERSTACK_API_KEY}&query=${req.body.latitude},${req.body.longitude}`
+    let url = `http://api.weatherstack.com/current?access_key=${WEATHERSTACK_API_KEY}&query=Dubai` //Hardcoded Dubai. Change this depending on your location
     //let url = `api.openweathermap.org/data/2.5/forecast/daily?q=Dubai&cnt=AE&appid=${OPEN_WEATHER_MAP_API_KEY}`
     
-    console.log(req.body.latitude, req.body.longitude)
+    //console.log(req.body.latitude, req.body.longitude)
     axios({
         url: url,
         responseType: 'json'
-    }).then(data => { res.json(data.data.current); console.log(data)})
+    }).then(data => { 
+        res.json(data.data.current); 
+        //console.log(data)
+    })
 })
 
 app.listen(5000, ()=> {

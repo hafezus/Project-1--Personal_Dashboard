@@ -5,52 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1L48t1sn-i-CeNbz36L6_4aViNfuIc5s&libraries=places"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.min.js"></script>
     <script defer src="script.js"></script>
 </head>
 <body>
-    <div class="container"> <!--Flex container row-->
+    <div class="containerr"> <!--Flex container row-->
             <div class="time">
                 <!--<h2>Hello, User</h2>-->
                 <span class="time">
-                    <h1 style="text-align: center; padding-top:5vh; font-weight:normal;">N/A</h2>
+                    <h1 style="text-align: center; padding-top:5vh; font-weight:lighter;">N/A</h2>
                 </span>
             </div>
             <div class="calendar">
-                Hello 1
+                <h1>Calendar</h1>
             </div>
             
             <div class="weather">
-                <div class="weather-api">
+                <div class="weather-api d-flex justify-content-center">
                     <div class="city-search-container">
                         <div class="icon-container">
                             <canvas id="icon" width="20" height="20"></canvas> <!--Use a library to import our icons. The library will need canvas icons.-->
                         </div>
-                        <input type="text" placeholder="Enter Location" data-city-search class="city-search">
-                        <div class="status" data-status>Enter a Location</div>
-                        <div class="location" data-location>To Find The Weather</div>
+                        <div class="location" data-location>Location Placeholder</div>
                         <div class="detail">
-                            <div class="title">Wind</div>
-                            <div class="value" data-wind>TBD</div>
+                            <div class="title" style="display: inline;">Wind: </div>
+                            <div class="value" data-wind style="display: inline;">TBD</div>
                         </div>
                         <div class="detail">
-                            <div class="title">Temperature</div>
-                            <div class="value" data-temperature>TBD</div>
+                            <div class="title" style="display: inline;">Temperature: </div>
+                            <div class="value" data-temperature style="display: inline;">TBD</div>
                         </div>
                         <div class="detail">
-                            <div class="title">Precipitation</div>
-                            <div class="value" data-precipitation>TBD</div>
+                            <div class="title" style="display: inline;">Precipitation: </div>
+                            <div class="value" data-precipitation style="display: inline;">TBD</div>
+                        </div>
+                        <div class="detail">
+                            <div class="title" style="display: inline;">Pressure: </div>
+                            <div class="value" data-pressure style="display: inline;">TBD</div>
+                        </div>
+                        <div class="detail">
+                            <div class="title" style="display: inline;">Visibility: </div>
+                            <div class="value" data-visibility style="display: inline;">TBD</div>
+                        </div>
+                        <div class="detail">
+                            <div class="title" style="display: inline;">Humidity: </div>
+                            <div class="value" data-humidity style="display: inline;">TBD</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="to-do-list">
-                Hello 4
+                    <h1>To-Do List</h1>
             </div>
 
             <div class="news">
-                Hello 5
+                <div class ="to-do">
+                    <h1>News</h1>
+                </div>
             </div>
 
     </div>
