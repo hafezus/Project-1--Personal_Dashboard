@@ -9,7 +9,7 @@ let displayTime = document.querySelector(".time h1");
   setTimeout(time, 1000);
 })();
 
-/* Weather API import */
+/* Weather API */
 document.addEventListener("sdsdd", () => { //DOMContentLoaded
 
   fetch("/weather", {
@@ -24,6 +24,7 @@ document.addEventListener("sdsdd", () => { //DOMContentLoaded
 
 });
 
+
 const icon = new Skycons({ color: "#fff" });
 icon.set("icon", "clear-day");
 
@@ -36,7 +37,6 @@ const pressureElem = document.querySelector("[data-pressure")
 const visibilityElem = document.querySelector("[data-visibility")
 const humidityElem = document.querySelector("[data-humidity")
  
-
 function setWeather(data) {
   //console.log("here2")
   locationElem.textContent = "Dubai"; //Hardcoded. Change this depending on your location
@@ -124,3 +124,22 @@ function setWeather(data) {
     icon.play();
   }
 }
+
+/* To-do list */
+
+let listItem_add = document.querySelector(".to-do-list button")
+
+listItem_add.textContent = "aDD"
+
+listItem_add.addEventListener('click',(e)=>{
+  e.preventDefault();
+  let checkbox_item = document.createElement("input")
+  checkbox_item.type='checkbox'
+  let container_item = document.createElement("div").appendChild(checkbox_item)
+  
+  let todo_container = document.querySelector(".to-do-list")
+  todo_container.appendChild(container_item)
+  
+
+  todo_container.appendChild
+})

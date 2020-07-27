@@ -21,9 +21,9 @@
     font-weight: lighter;
 }
 .containerr .to-do-list {
-    display:grid;
-    place-items:center;
     font-weight: lighter;
+    overflow-y: auto;
+    max-height:
 }
 .to-do-list h1{
     font-weight: lighter;
@@ -61,7 +61,7 @@
 .to-do-list{
     margin:5px;
     align-self: center;
-    min-height:47.5vh;
+    height:47.5vh;
     width:30%;
     background-color: rgb(201, 147, 122);
 }
@@ -72,5 +72,4 @@
     width:30%;
     background-color: rgb(100, 92, 87);
 }
-
 /*Styling content inside the flex items*/
