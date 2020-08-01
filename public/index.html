@@ -12,69 +12,81 @@
 </head>
 <body>
     <div class="containerr"> <!--Flex container row-->
-            <div class="time">
-                <!--<h2>Hello, User</h2>-->
-                <span class="time">
+        <div class="time">
+            <!--<h2>Hello, User</h2>-->
+            <span class="time">
                     <h1 style="text-align: center; padding-top:5vh; font-weight:lighter;">N/A</h2>
                 </span>
-            </div>
-            <div class="calendar">
-                <h1>Calendar</h1>
-            </div>
+        </div>
+        <div class="calendar">
+            <h1>Calendar</h1>
+        </div>
             
-            <div class="weather">
-                <div class="weather-api d-flex justify-content-center">
-                    <div class="city-search-container">
-                        <div class="icon-container">
-                            <canvas id="icon" width="20" height="20"></canvas> <!--Use a library to import our icons. The library will need canvas icons.-->
-                        </div>
-                        <div class="location" data-location>Location Placeholder</div>
-                        <div class="detail">
-                            <div class="title" style="display: inline;">Wind: </div>
-                            <div class="value" data-wind style="display: inline;">TBD</div>
-                        </div>
-                        <div class="detail">
-                            <div class="title" style="display: inline;">Temperature: </div>
+        <div class="weather">
+            <div class="weather-api d-flex justify-content-center">
+                <div class="city-search-container">
+                    <div class="icon-container">
+                        <canvas id="icon" width="20" height="20"></canvas> <!--Use a library to import our icons. The library will need canvas icons.-->
+                    </div>
+                    <div class="location" data-location>Location Placeholder</div>
+                    <div class="detail">
+                        <div class="title" style="display: inline;">Wind: </div>
+                        <div class="value" data-wind style="display: inline;">TBD</div>
+                    </div>
+                    <div class="detail">
+                    <div class="title" style="display: inline;">Temperature: </div>
                             <div class="value" data-temperature style="display: inline;">TBD</div>
-                        </div>
-                        <div class="detail">
-                            <div class="title" style="display: inline;">Precipitation: </div>
-                            <div class="value" data-precipitation style="display: inline;">TBD</div>
-                        </div>
-                        <div class="detail">
-                            <div class="title" style="display: inline;">Pressure: </div>
-                            <div class="value" data-pressure style="display: inline;">TBD</div>
-                        </div>
-                        <div class="detail">
-                            <div class="title" style="display: inline;">Visibility: </div>
-                            <div class="value" data-visibility style="display: inline;">TBD</div>
-                        </div>
-                        <div class="detail">
-                            <div class="title" style="display: inline;">Humidity: </div>
-                            <div class="value" data-humidity style="display: inline;">TBD</div>
-                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="title" style="display: inline;">Precipitation: </div>
+                        <div class="value" data-precipitation style="display: inline;">TBD</div>
+                    </div>
+                    <div class="detail">
+                        <div class="title" style="display: inline;">Pressure: </div>
+                        <div class="value" data-pressure style="display: inline;">TBD</div>
+                    </div>
+                     <div class="detail">
+                        <div class="title" style="display: inline;">Visibility: </div>
+                        <div class="value" data-visibility style="display: inline;">TBD</div>
+                    </div>
+                    <div class="detail">
+                        <div class="title" style="display: inline;">Humidity: </div>
+                        <div class="value" data-humidity style="display: inline;">TBD</div>
                     </div>
                 </div>
             </div>
-            <div class="to-do-list p-2">
-                <div>
-                    <h1 style="display:grid; place-items:center; margin-top:10px">To-Do List</h1>
-                    <button class="btn btn-primary">Add</button>
-                    <div class="test"><input type="checkbox" name="list-item"> <p>Pending item</p> <button class="btn btn-secondary">Edit</button><button class="btn btn-danger">Delete</button></div>                     
-                    <div class="test"><input type="checkbox" name="list-item"> <p>Pending item</p> <button class="btn btn-secondary">Edit</button><button class="btn btn-danger">Delete</button></div>  
-                </div>
-            <hr>
-                <div>
-                    <div class="test"><input type="checkbox" name="list-item" checked> <p>Completed item</p> </div> 
-                </div>
-            </div>
+        </div>
 
-            <div class="news">
-                <div class ="to-do">
-                    <h1>News</h1>
-                </div>
+        <div class="to-do-list p-2" style="overflow-y:hidden">
+            
+            <h1 style="display:grid; place-items:center; margin-top:10px">To-Do List</h1>
+            <hr style="background-color:rgb(129, 127, 127); margin: 10px 10px;">
+            
+            <div class="pending" style="max-height:40%; overflow-y:auto">
+                <h3 style="display:inline"">Pending</h3>
+                <button class="btn btn-primary">Add</button>
+                <div class="test"><input type="checkbox" name="list-item" class="check"><label contenteditable="true" style="min-width: 15px;" onkeypress="createNewItem()">Hello1</label><button class="btn btn-danger pt-0 delete float-md-right">x</button></div>                     
+                <div class="test"><input type="checkbox" name="list-item" class="check"><label contenteditable="true" style="min-width: 15px;">Hello2</label><button class="btn btn-danger pt-0 delete float-md-right">x</button></div>  
             </div>
+            
+            <hr style="background-color:rgb(129, 127, 127); margin: 10px 10px;">
+            
+            <div class="completed" style="max-height:50%; overflow-y:auto">
+                <h3 style="display:inline"">Completed</h3>
+                <div class="test"><input type="checkbox" name="list-item" class="check" checked><label contenteditable="true" style="min-width: 15px;">Hello3</label><button class="btn btn-danger pt-0 delete float-md-right">x</button></div> 
+            </div>
+        </div>
+        
+
+        <div class="news">
+            <h1 style="display:grid; place-items:center; margin-top:10px">News</h1>
+                <hr style="background-color:rgb(129, 127, 127); margin: 10px 10px;">
+                <div class="headlines">
+                    
+                </div>
+        </div>
 
     </div>
+    
 </body>
 </html>

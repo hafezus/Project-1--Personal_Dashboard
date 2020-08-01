@@ -10,18 +10,38 @@ let displayTime = document.querySelector(".time h1");
 })();
 
 /* Weather API */
-document.addEventListener("sdsdd", () => { //DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+  //DOMContentLoaded
 
+  /* 
   fetch("/weather", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Accept": "application/json",
+      Accept: "application/json",
     },
   })
-  .then(data=>data.json())
-  .then(data => {console.log(data); setWeather(data)})
-
+    .then((data) => data.json())
+    .then((data) => {
+      console.log(data);
+      setWeather(data);
+    });
+  */
+    fetch("/news", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        setNews(data);
+      }).catch((data)=>{
+        
+        console.log("Some error in news api fetch")
+      })
 });
 
 
@@ -33,10 +53,10 @@ const locationElem = document.querySelector("[data-location]");
 const windElem = document.querySelector("[data-wind]");
 const temperatureElem = document.querySelector("[data-temperature]");
 const precipitationElem = document.querySelector("[data-precipitation]");
-const pressureElem = document.querySelector("[data-pressure")
-const visibilityElem = document.querySelector("[data-visibility")
-const humidityElem = document.querySelector("[data-humidity")
- 
+const pressureElem = document.querySelector("[data-pressure");
+const visibilityElem = document.querySelector("[data-visibility");
+const humidityElem = document.querySelector("[data-humidity");
+
 function setWeather(data) {
   //console.log("here2")
   locationElem.textContent = "Dubai"; //Hardcoded. Change this depending on your location
@@ -125,21 +145,112 @@ function setWeather(data) {
   }
 }
 
+const newsHeadlines = document.querySelector(".news .headlines")
+let xx = document.createElement("h1")
+xx.innerHTML="Hellooooo"
+console.log(xx)
+newsHeadlines.append(xx)
+
+
+function setNews(data){
+  data.articles.forEach((item)=>{
+    let title = document.createElement("a")
+    let time = document.createElement("p")
+    let byline = document.createElement("p")
+    let headline = document.createElement("div")
+    headline.innerHTML = `<tr>
+        <td>${book.title}</td>
+        <td>${book.author}</td>
+        <td>${book.isbn}</td>
+        <td><a href="#" class = "btn btn-danger btn-sm delete">X</a></td>
+        <tr>`;
+  })
+
+}
+
 /* To-do list */
 
-let listItem_add = document.querySelector(".to-do-list button")
+let todo_container = document.querySelector(".to-do-list");
+let listItem_add = document.querySelector(".to-do-list button");
 
-listItem_add.textContent = "aDD"
+//listItem_add.textContent = "aDD";
+//let edit = document.createElement("button");
+let del = document.createElement("button");
 
-listItem_add.addEventListener('click',(e)=>{
+/* Add list item */
+listItem_add.addEventListener("click", (e) => {
   e.preventDefault();
-  let checkbox_item = document.createElement("input")
-  checkbox_item.type='checkbox'
-  let container_item = document.createElement("div").appendChild(checkbox_item)
-  
-  let todo_container = document.querySelector(".to-do-list")
-  todo_container.appendChild(container_item)
-  
+  console.log(e.target);
 
-  todo_container.appendChild
-})
+  del = document.createElement("button");
+  
+  let label = document.createElement("label");
+  label.contentEditable = "true" 
+  label.style = "min-width:15px;" //To be able to click on empty label
+
+  let checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.className += "check";
+  
+  del.className += "btn btn-danger pt-0 delete float-md-right";
+  del.textContent = "x";
+
+  let item_container = document.createElement("div");
+  
+  item_container.append(checkbox);
+  item_container.append(label);
+  item_container.append(del);
+
+  todo_container.querySelector(".pending").appendChild(item_container);
+});
+
+
+let todolistContainer = document.querySelector(".to-do-list");
+
+//Delete item, or check/uncheck item
+todolistContainer.addEventListener("click", (e) => {
+  if (e.target.className.includes("delete")) {
+    e.target.parentNode.remove();
+  }
+
+  //Move item from pending to completed
+  if (e.target.checked && e.target.className.includes("check")) {
+    todo_container.querySelector(".completed").appendChild(e.target.parentNode);
+  }
+
+  //Move item from completed to pending
+  if (!e.target.checked && e.target.className.includes("check")) {
+    todo_container.querySelector(".pending").appendChild(e.target.parentNode);
+  }
+});
+
+class Store {
+  static getList() {
+    let list;
+    if (localStorage.getItem("list") === null) {
+      list = [];
+    } else {
+      list = JSON.parse(localStorage.getItem("list"));
+    }
+    return list;
+  }
+
+  static addBook(item) {
+    const list = Store.getList();
+
+    list.push(item);
+
+    localStorage.setItem("list", JSON.stringify(list));
+  }
+
+  static removeBook(isbn) {
+    const list = Store.getList();
+    list.forEach((item, index) => {
+      if (item.isbn === isbn) {
+        list.splice(index, 1);
+      }
+    });
+
+    localStorage.setItem("list", JSON.stringify(list));
+  }
+}

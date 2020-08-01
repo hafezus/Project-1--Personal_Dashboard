@@ -3,13 +3,14 @@
     padding:0px;
     max-height:100vh;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color:white;
 }
 
 .containerr{
     display:flex;
     flex-flow: column wrap;
     justify-content: space-between;
-    background-color: rgb(119, 119, 119);
+    background-color: rgb(66, 66, 66);
     /*background-color: rgb(119, 119, 119);*/
 }
 .containerr .calendar {
@@ -29,8 +30,6 @@
     font-weight: lighter;
 }
 .containerr .news {
-    display:grid;
-    place-items:center;
     font-weight: lighter;
 }
 .news h1{
@@ -42,34 +41,34 @@
     align-self: flex-end;
     min-height:20vh;
     width:30%;
-    background-color: rgb(165, 113, 83);
+    background-color: rgb(53, 53, 53);
 }
 .calendar{
     margin:5px;
     align-self: flex-end;
     min-height:77.5vh;
     width:30%;
-    background-color: rgb(201, 171, 158);
+    background-color: rgb(66, 66, 66);
 }
 .weather{
     margin:5px;
     align-self: center;
     min-height:50vh;
     width:30%;
-    background-color: rgb(163, 123, 105);
+    background-color: rgb(71, 71, 71);
 }
 .to-do-list{
     margin:5px;
     align-self: center;
     height:47.5vh;
     width:30%;
-    background-color: rgb(201, 147, 122);
+    background-color: rgb(56, 56, 56);
 }
 .news{
     margin:5px;
     align-self: flex-start;
     min-height:99vh;
     width:30%;
-    background-color: rgb(100, 92, 87);
+    background-color: rgb(56, 56, 56);
 }
 /*Styling content inside the flex items*/
