@@ -11,6 +11,9 @@
     flex-flow: column wrap;
     justify-content: space-between;
     background-color: rgb(66, 66, 66);
+    background:url("images/Frame\ 1.png");
+    background-size: cover;
+    background-position-y: -200px;
     /*background-color: rgb(119, 119, 119);*/
 }
 .containerr .calendar {
@@ -24,7 +27,6 @@
 .containerr .to-do-list {
     font-weight: lighter;
     overflow-y: auto;
-    max-height:
 }
 .to-do-list h1{
     font-weight: lighter;
@@ -41,34 +43,34 @@
     align-self: flex-end;
     min-height:20vh;
     width:30%;
-    background-color: rgb(53, 53, 53);
+    background-color: rgba(177, 175, 118, 0.26);
 }
 .calendar{
     margin:5px;
     align-self: flex-end;
     min-height:77.5vh;
     width:30%;
-    background-color: rgb(66, 66, 66);
+    background-color: rgba(138, 128, 96, 0.377);
 }
 .weather{
     margin:5px;
     align-self: center;
     min-height:50vh;
     width:30%;
-    background-color: rgb(71, 71, 71);
+    background-color: rgba(161, 154, 115, 0.329);
 }
 .to-do-list{
     margin:5px;
     align-self: center;
     height:47.5vh;
     width:30%;
-    background-color: rgb(56, 56, 56);
+    background-color: rgba(155, 167, 134, 0.281);
 }
 .news{
     margin:5px;
     align-self: flex-start;
     min-height:99vh;
     width:30%;
-    background-color: rgb(56, 56, 56);
+    background-color: rgba(152, 156, 109, 0.288);
 }
 /*Styling content inside the flex items*/

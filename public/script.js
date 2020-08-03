@@ -13,7 +13,7 @@ let displayTime = document.querySelector(".time h1");
 document.addEventListener("DOMContentLoaded", () => {
   //DOMContentLoaded
 
-  /* 
+  ///* 
   fetch("/weather", {
     method: "POST",
     headers: {
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(data);
       setWeather(data);
     });
-  */
+  //*/
     fetch("/news", {
       method: "POST",
       headers: {
@@ -146,35 +146,46 @@ function setWeather(data) {
 }
 
 const newsHeadlines = document.querySelector(".news .headlines")
-let xx = document.createElement("h1")
-xx.innerHTML="Hellooooo"
-console.log(xx)
-newsHeadlines.append(xx)
-
+let div = document.createElement("div")
+//xx.innerHTML="Hellooooo"
+//console.log(xx)
+newsHeadlines.append(div)
 
 function setNews(data){
   data.articles.forEach((item)=>{
-    let title = document.createElement("a")
-    let time = document.createElement("p")
-    let byline = document.createElement("p")
-    let headline = document.createElement("div")
-    headline.innerHTML = `<tr>
-        <td>${book.title}</td>
-        <td>${book.author}</td>
-        <td>${book.isbn}</td>
-        <td><a href="#" class = "btn btn-danger btn-sm delete">X</a></td>
-        <tr>`;
-  })
+  console.log(item.description)
+  newsHeadlines.append(div)
+  let title = document.createElement("a")
+  title.href = item.url
+  title.style="color:#ccc;"
+  let time = document.createElement("p")
+  let byline = document.createElement("p")
+  div.append(title, time, byline)
+  title.innerHTML=item.description
+  byline.innerHTML=item.author
+  time.innerHTML=item.publishedAt
+  div.class += "border border-white";
 
+  // let title = document.createElement("a")
+    // title.innerHTML=item.description;
+    // let time = document.createElement("p")
+    // time.innerHTML=item.publishedAt;
+    // let byline = document.createElement("p")
+    // byline.innerHTML=item.author;
+    // let headline = document.createElement("div")
+    // headline.innerHTML = `<tr>
+    //     <td>${item.description}</td>
+    //     <td>${item.publishedAt}</td>
+    //     <td>${item.author}</td>
+    //     </tr>`;
+    // newsHeadlines.append(headline)
+  })
 }
 
 /* To-do list */
 
 let todo_container = document.querySelector(".to-do-list");
 let listItem_add = document.querySelector(".to-do-list button");
-
-//listItem_add.textContent = "aDD";
-//let edit = document.createElement("button");
 let del = document.createElement("button");
 
 /* Add list item */
@@ -186,8 +197,7 @@ listItem_add.addEventListener("click", (e) => {
   
   let label = document.createElement("label");
   label.contentEditable = "true" 
-  label.style = "min-width:15px;" //To be able to click on empty label
-
+  label.style = "min-width:15px; color: white;" //To be able to click on empty label
   let checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.className += "check";

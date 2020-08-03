@@ -33,14 +33,14 @@ app.post('/weather', (req, res)=>{
 })
 
 app.post('/news', (req, res)=>{
-    let url = `https://newsapi.org/v2/top-headlines?language=en&country=us&apiKey=${NEWSAPI_API_KEY}`; //Hardcoded Dubai. Change this depending on your location
+    let url = `https://newsapi.org/v2/top-headlines?language=en&country=us&pageSize=6&apiKey=${NEWSAPI_API_KEY}`; //Hardcoded Dubai. Change this depending on your location
     
     axios({
         url: url,
         responseType: 'json'
     }).then(data => { 
         res.json(data.data); 
-        console.log(data)
+        //console.log(data)
     })
 })
 
