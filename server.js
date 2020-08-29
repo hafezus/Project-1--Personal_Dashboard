@@ -40,7 +40,7 @@ app.post('/news', (req, res)=>{
         responseType: 'json'
     }).then(data => { 
         res.json(data.data); 
-        //console.log(data)
+        //console.log(data.data)
     })
 })
 
