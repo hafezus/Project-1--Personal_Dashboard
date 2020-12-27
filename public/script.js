@@ -159,11 +159,22 @@ function setNews(data) {
 		title.style = "color:#ccc;";
 		let time = document.createElement("p");
 		let byline = document.createElement("p");
-		div.append(title, time, byline);
-		title.innerHTML = item.description;
+		let rule = document.createElement("hr");
+		let image = document.createElement("img")
+		rule.style.backgroundColor = "rgb(129, 127, 127)";
+		rule.style.margin = "10px"
+		div.append(image, title, time, byline, rule);
+		title.innerHTML = item.title;
 		byline.innerHTML = item.author;
 		time.innerHTML = item.publishedAt;
+		image.src = item.urlToImage
+
+		image.style.width = '128px'
+		image.style.height = "auto"
+		//image.innerHTML = item.
 		div.class += "border border-white";
+
+		console.log(data)
 
 		// let title = document.createElement("a")
 		// title.innerHTML=item.description;
