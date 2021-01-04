@@ -59,7 +59,7 @@ const humidityElem = document.querySelector("[data-humidity");
 function setWeather(data) {
 	//console.log("here2")
 	locationElem.textContent = "Dubai"; //Hardcoded. Change this depending on your location
-	temperatureElem.textContent = data.temperature + "c";
+	temperatureElem.textContent = data.temperature + "\u00B0C";
 	windElem.textContent = data.wind_speed + "km/h";
 	precipitationElem.textContent = data.precip + "%";
 	humidityElem.textContent = data.humidity + "%";
@@ -83,10 +83,7 @@ function setWeather(data) {
 	} else if (data.weather_code === 248) {
 		icon.set("icon", "fog");
 		icon.play();
-	} else if (data.weather_code === 176) {
-		icon.set("icon", "rain");
-		icon.play();
-	} else if (data.weather_code === 179) {
+	}  else if (data.weather_code === 179) {
 		icon.set("icon", "snow");
 		icon.play();
 	} else if (data.weather_code === 182) {
@@ -111,7 +108,16 @@ function setWeather(data) {
 	} else if (data.weather_code === 263) {
 		icon.set("icon", "rain");
 		icon.play();
-	} else if (data.weather_code === 266) {
+	} else if (
+		data.weather_code === 176 || 
+		data.weather_code === 266 ||
+		data.weather_code === 266 || 
+		data.weather_code === 293 || 
+		data.weather_code === 296 || 
+		data.weather_code === 299 || 
+		data.weather_code === 302 || 
+		data.weather_code === 305 || 
+		data.weather_code === 308) {
 		icon.set("icon", "rain");
 		icon.play();
 	} else if (data.weather_code === 281) {
@@ -119,24 +125,6 @@ function setWeather(data) {
 		icon.play();
 	} else if (data.weather_code === 284) {
 		icon.set("icon", "sleet");
-		icon.play();
-	} else if (data.weather_code === 293) {
-		icon.set("icon", "rain");
-		icon.play();
-	} else if (data.weather_code === 296) {
-		icon.set("icon", "rain");
-		icon.play();
-	} else if (data.weather_code === 299) {
-		icon.set("icon", "rain");
-		icon.play();
-	} else if (data.weather_code === 302) {
-		icon.set("icon", "rain");
-		icon.play();
-	} else if (data.weather_code === 305) {
-		icon.set("icon", "rain");
-		icon.play();
-	} else if (data.weather_code === 308) {
-		icon.set("icon", "rain");
 		icon.play();
 	} else if (data.weather_code === 311) {
 		icon.set("icon", "sleet");
@@ -163,32 +151,23 @@ function setNews(data) {
 		let image = document.createElement("img")
 		rule.style.backgroundColor = "rgb(129, 127, 127)";
 		rule.style.margin = "10px"
-		div.append(image, title, time, byline, rule);
+		div.append(image, title, time, rule);
 		title.innerHTML = item.title;
 		byline.innerHTML = item.author;
-		time.innerHTML = item.publishedAt;
+		time.innerHTML = new Date(Date.parse(item.publishedAt)).toDateString();
 		image.src = item.urlToImage
+		image.style.onerror = "https://i.stack.imgur.com/y9DpT.jpg"
 
+		//byline.style.float = "right"
+
+		image.style.float = "left"
+		image.style.paddingRight = "5px"
 		image.style.width = '128px'
-		image.style.height = "auto"
+		image.style.height = "64px"
 		//image.innerHTML = item.
 		div.class += "border border-white";
 
 		console.log(data)
-
-		// let title = document.createElement("a")
-		// title.innerHTML=item.description;
-		// let time = document.createElement("p")
-		// time.innerHTML=item.publishedAt;
-		// let byline = document.createElement("p")
-		// byline.innerHTML=item.author;
-		// let headline = document.createElement("div")
-		// headline.innerHTML = `<tr>
-		//     <td>${item.description}</td>
-		//     <td>${item.publishedAt}</td>
-		//     <td>${item.author}</td>
-		//     </tr>`;
-		// newsHeadlines.append(headline)
 	});
 }
 

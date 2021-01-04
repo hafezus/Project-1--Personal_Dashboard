@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.static('public')); 
 
 app.post('/weather', (req, res)=>{
-    let url = `http://api.weatherstack.com/current?access_key=${WEATHERSTACK_API_KEY}&query=Dubai` //Hardcoded Dubai. Change this depending on your location
+    let url = `http://api.weatherstack.com/current?access_key=${WEATHERSTACK_API_KEY}&query=Dubaiabc` //Hardcoded Dubai. Change this depending on your location
     
     //http://api.weatherstack.com/current?access_key=86b73ab759c123181cf42633ba1caee6&query=Dubai
     //let url = `api.openweathermap.org/data/2.5/forecast/daily?q=Dubai&cnt=AE&appid=${OPEN_WEATHER_MAP_API_KEY}`
@@ -33,7 +33,7 @@ app.post('/weather', (req, res)=>{
 })
 
 app.post('/news', (req, res)=>{
-    let url = `https://newsapi.org/v2/top-headlines?language=en&country=us&pageSize=6&apiKey=${NEWSAPI_API_KEY}`; //Hardcoded Dubai. Change this depending on your location
+    let url = `http://newsapi.org/v2/everything?q=bitcoin&from=2021-1-1&sortBy=publishedAt&apiKey=${NEWSAPI_API_KEY}123`; //Hardcoded Dubai. Change this depending on your location
     
     axios({
         url: url,
