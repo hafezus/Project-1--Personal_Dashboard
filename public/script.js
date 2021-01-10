@@ -9,6 +9,190 @@ let displayTime = document.querySelector(".time h1");
 	setTimeout(time, 1000);
 })();
 
+/* Calendar */
+
+// Client ID and API key from the Developer Console
+var CLIENT_ID =
+	"100494644665-e1jikfm2ete1lmt78qcchqq2dnkaj29b.apps.googleusercontent.com";
+var API_KEY = "AIzaSyD1L48t1sn-i-CeNbz36L6_4aViNfuIc5s";
+
+// Array of API discovery doc URLs for APIs used by the quickstart
+var DISCOVERY_DOCS = [
+	"https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+];
+
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+
+var authorizeButton = document.getElementById("authorize_button");
+var signoutButton = document.getElementById("signout_button");
+
+/**
+ *  On load, called to load the auth2 library and API client library.
+ */
+function handleClientLoad() {
+	gapi.load("client:auth2", initClient);
+}
+
+/**
+ *  Initializes the API client library and sets up sign-in state
+ *  listeners.
+ */
+function initClient() {
+	gapi.client
+		.init({
+			apiKey: API_KEY,
+			clientId: CLIENT_ID,
+			discoveryDocs: DISCOVERY_DOCS,
+			scope: SCOPES,
+		})
+		.then(
+			function () {
+				// Listen for sign-in state changes.
+				gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+				// Handle the initial sign-in state.
+				updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+				authorizeButton.onclick = handleAuthClick;
+				signoutButton.onclick = handleSignoutClick;
+			},
+			function (error) {
+				appendPre(JSON.stringify(error, null, 2));
+			}
+		);
+}
+
+/**
+ *  Called when the signed in status changes, to update the UI
+ *  appropriately. After a sign-in, the API is called.
+ */
+function updateSigninStatus(isSignedIn) {
+	if (isSignedIn) {
+		authorizeButton.style.display = "none";
+		signoutButton.style.cssText = `display:block;`;
+		listUpcomingEvents();
+	} else {
+		signoutButton.style.display = "none";
+		authorizeButton.style.cssText = `display:block;`;
+	}
+}
+
+/**
+ *  Sign in the user upon button click.
+ */
+function handleAuthClick(event) {
+	gapi.auth2.getAuthInstance().signIn();
+}
+
+/**
+ *  Sign out the user upon button click.
+ */
+function handleSignoutClick(event) {
+	gapi.auth2.getAuthInstance().signOut();
+	var pre = document.getElementById("content");
+	pre.innerHTML = "";
+}
+
+/**
+ * Append a pre element to the body containing the given message
+ * as its text node. Used to display the results of the API call.
+ *
+ * @param {string} message Text to be placed in pre element.
+ */
+function appendPre(message, when) {
+	var pre = document.getElementById("content");
+
+	var textContent = document.createElement("p");
+	//textContent.style.display = 'block';
+	textContent.textContent += message.toString();
+	textContent.style.cssText = `
+		display: inline;
+		width: 50%;
+	`;
+
+	var whenContent = document.createElement("p");
+	whenContent.textContent += when.toString();
+	whenContent.style.cssText = `
+		display:inline;
+		width:50%;
+		text-align: right;
+	`;
+
+	let divContent = document.createElement("div");
+	divContent.style.cssText = `
+		display:flex;
+	`;
+
+	divContent.appendChild(textContent);
+	divContent.appendChild(whenContent);
+
+	pre.style.cssText = `
+		color: #fff;
+		font-family: sans-serif, helvetica, consolas;
+		display:none;
+	  `;
+	  //display:none;
+	pre.appendChild(divContent);
+}
+
+/**
+ * Print the summary and start datetime/date of the next ten events in
+ * the authorized user's calendar. If no events are found an
+ * appropriate message is printed.
+ */
+
+let eventsList = [];
+
+async function listUpcomingEvents() {
+	gapi.client.calendar.events
+		.list({
+			calendarId: "primary",
+			timeMin: new Date().toISOString(),
+			showDeleted: false,
+			singleEvents: true,
+			maxResults: 10,
+			orderBy: "startTime",
+		})
+		.then(async function (response) {
+			var events = response.result.items;
+
+			if (events.length > 0) {
+				for (i = 0; i < events.length; i++) {
+					var event = events[i];
+					eventsList.push({
+						title: events[i].summary,
+						start: events[i].start.date,
+						end: events[i].end.date,
+					});
+
+					var when = event.start.dateTime;
+					if (!when) {
+						when = event.start.date;
+					}
+					console.log(eventsList);
+					let calendarEl = document.getElementById("calendar");
+
+					let calendar = new FullCalendar.Calendar(calendarEl, {
+						initialDate: "2021-01-10",
+						editable: true,
+						selectable: true,
+						businessHours: true,
+						dayMaxEvents: true,
+						events: eventsList, //new Array({title: "gay lord", start: "2021-01-12", end: "2021-01-13"})
+					});
+					//console.log(eventsList);
+
+					calendar.render();
+					//console.log(event)
+					appendPre(event.summary, when);
+				}
+			} else {
+				appendPre("No upcoming events found.", "");
+			}
+		});
+}
+
 /* Weather API */
 document.addEventListener("DOMContentLoaded", () => {
 	//DOMContentLoaded
@@ -25,6 +209,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		.then((data) => {
 			console.log(data);
 			setWeather(data);
+		})
+		.catch((data) => {
+			console.log("Some error in news api fetch");
 		});
 	//*/
 	fetch("/news", {
@@ -71,62 +258,43 @@ function setWeather(data) {
 	} else if (data.weather_code === 116) {
 		icon.set("icon", "partly-cloudy-day");
 		icon.play();
-	} else if (data.weather_code === 119) {
+	} else if (
+		data.weather_code === 119 ||
+		data.weather_code === 122 ||
+		data.weather_code === 143
+	) {
 		icon.set("icon", "cloudy");
 		icon.play();
-	} else if (data.weather_code === 122) {
-		icon.set("icon", "cloudy");
-		icon.play();
-	} else if (data.weather_code === 143) {
-		icon.set("icon", "cloudy");
-		icon.play();
-	} else if (data.weather_code === 248) {
-		icon.set("icon", "fog");
-		icon.play();
-	}  else if (data.weather_code === 179) {
+	} else if (data.weather_code === 179 || data.weather_code === 230) {
 		icon.set("icon", "snow");
-		icon.play();
-	} else if (data.weather_code === 182) {
-		icon.set("icon", "sleet");
-		icon.play();
-	} else if (data.weather_code === 200) {
-		//Thundery Outbreaks possible
-		icon.set("icon", "rain");
 		icon.play();
 	} else if (data.weather_code === 227) {
 		icon.set("icon", "wind");
 		icon.play();
-	} else if (data.weather_code === 230) {
-		icon.set("icon", "snow");
-		icon.play();
-	} else if (data.weather_code === 248) {
+	} else if (data.weather_code === 248 || data.weather_code === 260) {
 		icon.set("icon", "fog");
 		icon.play();
-	} else if (data.weather_code === 260) {
-		icon.set("icon", "fog");
-		icon.play();
-	} else if (data.weather_code === 263) {
+	} else if (
+		data.weather_code === 176 ||
+		data.weather_code === 200 ||
+		data.weather_code === 263 ||
+		data.weather_code === 266 ||
+		data.weather_code === 266 ||
+		data.weather_code === 293 ||
+		data.weather_code === 296 ||
+		data.weather_code === 299 ||
+		data.weather_code === 302 ||
+		data.weather_code === 305 ||
+		data.weather_code === 308
+	) {
 		icon.set("icon", "rain");
 		icon.play();
 	} else if (
-		data.weather_code === 176 || 
-		data.weather_code === 266 ||
-		data.weather_code === 266 || 
-		data.weather_code === 293 || 
-		data.weather_code === 296 || 
-		data.weather_code === 299 || 
-		data.weather_code === 302 || 
-		data.weather_code === 305 || 
-		data.weather_code === 308) {
-		icon.set("icon", "rain");
-		icon.play();
-	} else if (data.weather_code === 281) {
-		icon.set("icon", "sleet");
-		icon.play();
-	} else if (data.weather_code === 284) {
-		icon.set("icon", "sleet");
-		icon.play();
-	} else if (data.weather_code === 311) {
+		data.weather_code === 182 ||
+		data.weather_code === 281 ||
+		data.weather_code === 284 ||
+		data.weather_code === 311
+	) {
 		icon.set("icon", "sleet");
 		icon.play();
 	}
@@ -148,107 +316,166 @@ function setNews(data) {
 		let time = document.createElement("p");
 		let byline = document.createElement("p");
 		let rule = document.createElement("hr");
-		let image = document.createElement("img")
+		let image = document.createElement("img");
 		rule.style.backgroundColor = "rgb(129, 127, 127)";
-		rule.style.margin = "10px"
+		rule.style.margin = "10px";
 		div.append(image, title, time, rule);
 		title.innerHTML = item.title;
 		byline.innerHTML = item.author;
 		time.innerHTML = new Date(Date.parse(item.publishedAt)).toDateString();
-		image.src = item.urlToImage
-		image.style.onerror = "https://i.stack.imgur.com/y9DpT.jpg"
+		image.src = item.urlToImage;
+		image.style.onerror = "https://i.stack.imgur.com/y9DpT.jpg";
 
 		//byline.style.float = "right"
 
-		image.style.float = "left"
-		image.style.paddingRight = "5px"
-		image.style.width = '128px'
-		image.style.height = "64px"
+		image.style.float = "left";
+		image.style.paddingRight = "5px";
+		image.style.width = "128px";
+		image.style.height = "64px";
 		//image.innerHTML = item.
 		div.class += "border border-white";
 
-		console.log(data)
+		console.log(data);
 	});
 }
 
 /* To-do list */
 
-let todo_container = document.querySelector(".to-do-list");
+let todo_container = document.querySelector(".pending");
 let listItem_add = document.querySelector(".to-do-list button");
 let del = document.createElement("button");
+let list = [];
+/* 
+	{ id, content }
+*/
 
-/* Add list item */
 listItem_add.addEventListener("click", (e) => {
-	e.preventDefault();
-	console.log(e.target);
+	let newItem = document.createElement("div");
+	newItem.className += "list_item";
+	newItem.style.display = "inline";
 
-	del = document.createElement("button");
+	let itemCheckbox = document.createElement("input");
+	itemCheckbox.type = "checkbox";
+	itemCheckbox.id = Math.random(100_000_000_000);
 
-	let label = document.createElement("label");
-	label.contentEditable = "true";
-	label.style = "min-width:15px; color: white;"; //To be able to click on empty label
-	let checkbox = document.createElement("input");
-	checkbox.type = "checkbox";
-	checkbox.className += "check";
+	//let roundDiv = document.createElement("div")
+	//roundDiv.style.position = "relative"
 
-	del.className += "btn btn-danger pt-0 delete float-md-right";
-	del.textContent = "x";
+	let roundDiv = document.createElement("div");
+	roundDiv.className += "round";
 
-	let item_container = document.createElement("div");
+	let roundLabel = document.createElement("label");
 
-	item_container.append(checkbox);
-	item_container.append(label);
-	item_container.append(del);
+	roundDiv.appendChild(roundLabel);
+	roundDiv.appendChild(itemCheckbox);
 
-	todo_container.querySelector(".pending").appendChild(item_container);
-});
+	roundLabel.style.cssText = `background-color: #fff;
+    border: 1px solid rgb(185, 163, 163);
+    border-radius: 50%;
+    cursor: pointer;
+    height: 28px;
+    left: -25px;
+    position: absolute;
+    top: 0;
+    width: 28px;
+    margin-left:6.5px;
+    transition:cubic-bezier(0.19, 1, 0.22, 1);
+	transition-duration: 300ms;
+	`;
 
-let todolistContainer = document.querySelector(".to-do-list");
-
-//Delete item, or check/uncheck item
-todolistContainer.addEventListener("click", (e) => {
-	if (e.target.className.includes("delete")) {
-		e.target.parentNode.remove();
+	roundLabel.after.cssText = `
+	border: 2px solid #fff;
+    border-top: none;
+    border-right: none;
+    content: "";
+    height: 6px;
+    left: 7px;
+    opacity: 0;
+    position: absolute;
+    top: 8px;
+	width: 12px;
+	`;
+	roundLabel.htmlFor = itemCheckbox.id;
+	//itemCheckbox.style.visibility = "hidden"
+	if (roundLabel.type === "checkbox" && itemCheckbox.checked) {
 	}
+	itemCheckbox.addEventListener("click", (e) => {
+		console.log(e.target.checked);
+		if (e.target.checked) {
+			roundLabel.style.cssText = `
+			background-color: #66bb6a; 
+			border-color: #66bb6a; 
+			opacity: 1;`;
 
-	//Move item from pending to completed
-	if (e.target.checked && e.target.className.includes("check")) {
-		todo_container.querySelector(".completed").appendChild(e.target.parentNode);
-	}
+			//console.log(e.target.parentNode.parentNode.querySelector("label"))
 
-	//Move item from completed to pending
-	if (!e.target.checked && e.target.className.includes("check")) {
-		todo_container.querySelector(".pending").appendChild(e.target.parentNode);
-	}
-});
+			e.target.parentNode.parentNode.querySelector(
+				"label"
+			).style.textDecoration = "line-through";
+			e.target.parentNode.parentNode.querySelector(
+				"label"
+			).contentEditable = false;
+		} else if (!e.target.checked) {
+			roundLabel.style.cssText = `
+			background-color: #fff;
+			border: 1px solid rgb(185, 163, 163);
+			border-radius: 50%;
+			cursor: pointer;
+			height: 28px;
+			left: -25px;
+			position: absolute;
+			top: 0;
+			width: 28px;
+			margin-left:6.5px;
+			transition:cubic-bezier(0.19, 1, 0.22, 1);
+			transition-duration: 300ms;
+			`;
 
-class Store {
-	static getList() {
-		let list;
-		if (localStorage.getItem("list") === null) {
-			list = [];
-		} else {
-			list = JSON.parse(localStorage.getItem("list"));
+			e.target.parentNode.parentNode.querySelector(
+				"label"
+			).style.textDecoration = "none";
+			e.target.parentNode.parentNode.querySelector(
+				"label"
+			).contentEditable = true;
 		}
-		return list;
+		//if(e.checked)
+	});
+
+	if (itemCheckbox.checked) {
 	}
 
-	static addBook(item) {
-		const list = Store.getList();
+	// roundLabel.forEach((item) =>{
+	// 	if (item.type)
+	// 	roundLabel.style.
 
-		list.push(item);
+	// })
 
-		localStorage.setItem("list", JSON.stringify(list));
-	}
+	let itemContent = document.createElement("label");
+	itemContent.contentEditable = true;
+	itemContent.title = "New todo item";
+	itemContent.style = "width:70%;";
+	itemContent.style.marginLeft = "10px";
+	itemContent.style.marginTop = "5px";
+	itemContent.style.outline = "none";
+	itemContent.style.color = "white";
+	itemContent.style.fontSize = "16px"
 
-	static removeBook(isbn) {
-		const list = Store.getList();
-		list.forEach((item, index) => {
-			if (item.isbn === isbn) {
-				list.splice(index, 1);
-			}
-		});
+	let horizontalRule = document.createElement("hr");
+	horizontalRule.style.padding = "0px";
+	horizontalRule.style.margin = "10px";
+	horizontalRule.style.backgroundColor = "rgba(256, 256, 256, 0.5)";
 
-		localStorage.setItem("list", JSON.stringify(list));
-	}
-}
+	newItem.appendChild(itemContent);
+	newItem.appendChild(roundDiv);
+	newItem.appendChild(horizontalRule);
+
+	todo_container.append(newItem);
+});
+
+// document.addEventListener('DOMContentLoaded', function() {
+// 	//let elems = document.querySelectorAll('.datepicker');
+
+// 	//var instances =
+// 	//M.Datepicker.init(elems);
+
+// });
