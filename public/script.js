@@ -12,9 +12,10 @@ let displayTime = document.querySelector(".time h1");
 /* Calendar */
 
 // Client ID and API key from the Developer Console
-var CLIENT_ID =
-	"100494644665-e1jikfm2ete1lmt78qcchqq2dnkaj29b.apps.googleusercontent.com";
+var CLIENT_ID = "100494644665-e1jikfm2ete1lmt78qcchqq2dnkaj29b.apps.googleusercontent.com";
+//var CLIENT_ID = process.env.CALENDAR_CLIENT_ID;
 var API_KEY = "AIzaSyD1L48t1sn-i-CeNbz36L6_4aViNfuIc5s";
+//var API_KEY = process.env.CALENDAR_API_KEY;
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = [
